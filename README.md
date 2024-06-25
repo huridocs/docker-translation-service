@@ -1,3 +1,20 @@
+# Results
+
+We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki-NLP/opus-100) test set in Arabic, English, Spanish, French and Russian. The results are as follows:
+
+| Model  | promt        | Arabic | English    | Spanish | French   | Russian |
+|--------|--------------|---------|------------|--------|----------|---------|
+| llama3 | promt 1      | 0.950   | 0.939      | 0.968  | 0.981    | 0.981   |
+
+
+
+promts legend:
+
+
+1. promt 1: ""
+2. promt 2: "
+
+
 # docker-translation-service
 
 ollama serve

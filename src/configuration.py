@@ -7,6 +7,8 @@ ROOT_PATH = Path(__file__).parent.parent.absolute()
 # MODEL = "llama3"
 MODEL = "tinyllama"
 TRANSLATIONS_PORT = 7869
+LANGUAGES_SHORT = ["en", "fr", "es", "ru", "ar"]
+LANGUAGES = ["English", "French", "Spanish", "Russian", "Arabic"]
 
 handlers = [logging.StreamHandler()]
 logging.root.handlers = []
