@@ -9,6 +9,10 @@ sudo service ollama stop
 sudo kill -9 $(ps aux | grep 'ollama' | awk '{print $2}')
 sudo kill -9 pid
 
+root@debian:~# find /usr/share/ollama/.ollama/models/ -type f -exec chown ollama:ollama {} \;
+root@debian:~# find /usr/share/ollama/.ollama/models/ -type d -exec chown ollama:ollama {} \;
+root@debian:~# find /usr/share/ollama/.ollama/models/ -type f -exec chmod 644 {} \;
+root@debian:~# find /usr/share/ollama/.ollama/models/ -type d -exec chmod 755 {} \;
 
 
 https://hub.docker.com/r/ollama/ollama

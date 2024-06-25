@@ -1,0 +1,12 @@
+services:
+  translation-service-gpu:
+    extends:
+      file: docker-compose.yml
+      service: translation-service
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]

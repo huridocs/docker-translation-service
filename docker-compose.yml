@@ -1,0 +1,11 @@
+services:
+  translation-service:
+    container_name: translation-service
+    entrypoint: [ "gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--chdir", "./src", "app:app", "--bind", "0.0.0.0:11434", "--timeout", "10000"]
+    init: true
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "11434:11434"
