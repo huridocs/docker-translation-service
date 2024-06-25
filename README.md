@@ -24,7 +24,7 @@ or
 docker start ollama
 
 docker exec -it ollama ollama run aya:35b
-docker exec -it ollama-translations pull tinyllama
+docker exec -it ollama-translations ollama pull tinyllama
 
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
-curl http://localhost:11434/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
+curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
