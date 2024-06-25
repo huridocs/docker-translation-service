@@ -7,4 +7,3 @@ class TranslationTaskMessage(BaseModel):
     text: str
     language_from: str
     languages_to: list[str]
-

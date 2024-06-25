@@ -1,11 +1,27 @@
+version: '3.8'
+
 services:
-  translation-service:
-    container_name: translation-service
-    entrypoint: [ "gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--chdir", "./src", "app:app", "--bind", "0.0.0.0:11434", "--timeout", "10000"]
-    init: true
+
+  ollama-translations:
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+    container_name: ollama-translations
+    pull_policy: always
+    tty: true
     restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      - 7869:11434
+    networks:
+      - ollama-docker
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  ollama-docker:
+    external: false
