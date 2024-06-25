@@ -165,4 +165,5 @@ cython_debug/
 /pdf_outputs/
 /detectron2/
 /ollama/
-/src/benchmark/data/
+/data/
+/data/
