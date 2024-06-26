@@ -9,13 +9,17 @@ client = Client(host=f"http://localhost:{TRANSLATIONS_PORT}")
 
 
 def get_content(translation_task: TranslationTask):
-    context_for_source_language = ""
-    if translation_task.language_from:
-        context_for_source_language += f"from {translation_task.language_from}"
-    content = (
-        f"Translate the below text {context_for_source_language} to {translation_task.language_to}, "
-        f"keep the layout, do not skip any text, do not output anything else besides translation:"
-    )
+    # context_for_source_language = ""
+    # if translation_task.language_from:
+    #     context_for_source_language += f"from {translation_task.language_from}"
+    content = f"""Please translate the following text into {translation_task.language_to}. Follow these guidelines:
+1. Maintain the original layout and formatting.
+2. Translate all text accurately without omitting any part of the content.
+3. Preserve the tone and style of the original text.
+4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
+
+Here is the text to be translated:
+"""
     content += "\n\n" + translation_task.text
     return content
 

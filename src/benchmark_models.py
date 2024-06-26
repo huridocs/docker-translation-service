@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 
 import pandas as pd
 from shutil import rmtree
@@ -12,12 +12,15 @@ from src.configuration import ROOT_PATH, LANGUAGES_SHORT, LANGUAGES
 from fast_bleu import BLEU
 
 from translate import get_content, client
+from configuration import cejil_1_page, cejil_2_page, cejil_3_page
+
 
 # MODELS = ["llama3", "tinyllama", "GLM-4"]
-# LANGUAGES_PAIRS = ["ar-en", "en-es", "en-fr", "en-ru"]
+LANGUAGES_PAIRS = ["en-ru"]
 
-MODELS = ["llama3"]
-LANGUAGES_PAIRS = ["en-fr"]
+# MODELS = ["llama3"]
+MODELS = ["aya"]
+# LANGUAGES_PAIRS = ["en-fr"]
 
 
 def download_data():
@@ -62,18 +65,33 @@ def benchmark():
         for pair in LANGUAGES_PAIRS:
             average_performance = 0
             print(f"Model: {model}, Pair: {pair}")
-            samples = read_samples(pair, 10)
+            samples = read_samples(pair)
+            total_time = 0
             for from_text, human_translation in tqdm(samples):
                 language_from = LANGUAGES[LANGUAGES_SHORT.index(pair.split('-')[0])]
                 language_to = LANGUAGES[LANGUAGES_SHORT.index(pair.split('-')[1])]
+                start_time = time()
                 prediction = get_prediction(model, from_text, language_from, language_to)
+                total_time += time() - start_time
                 average_performance += get_bleu_scores(human_translation, prediction)
 
             print(f"Average performance: {100 * average_performance/len(samples)}")
+            print(f"Total time: {total_time} || Average time: {total_time/len(samples)}")
+
+
+def predict_long_text():
+    translation_task = TranslationTask(text=cejil_3_page, language_from="", language_to="English")
+    content = get_content(translation_task)
+    start_time = time()
+    response = client.chat(model="aya:35b", messages=[{"role": "user", "content": content}])
+    response_time = time() - start_time
+    print(response["message"]["content"])
+    print(f"\nResponse time: {round(response_time)} seconds.")
 
 
 if __name__ == '__main__':
     # download_data()
     # read_samples("en-es")
     # get_bleu_scores()
-    benchmark()
+    # benchmark()
+    predict_long_text()
