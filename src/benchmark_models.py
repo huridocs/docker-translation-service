@@ -10,7 +10,7 @@ from huggingface_hub import hf_hub_download
 from data_model.TranslationTask import TranslationTask
 from src.configuration import ROOT_PATH, LANGUAGES_SHORT, LANGUAGES
 from fast_bleu import BLEU
-
+from bleu import list_bleu
 from translate import get_content, client
 from configuration import cejil_1_page, cejil_2_page, cejil_3_page
 
@@ -36,7 +36,7 @@ def read_samples(language_pair: str, limit: int = 0) -> list[tuple[str, str]]:
     df = pd.read_parquet(join(ROOT_PATH, "data", language_pair), engine='pyarrow')
     lang1, lang2 = df.iloc[0]['translation'].keys()
     texts_translations = list()
-    for i, row in tqdm(df.iterrows()):
+    for i, row in df.iterrows():
         texts_translations.append((row['translation'][lang1], row['translation'][lang2]))
         if limit and i == limit:
             break
@@ -89,9 +89,21 @@ def predict_long_text():
     print(f"\nResponse time: {round(response_time)} seconds.")
 
 
+def get_characters_to_translate():
+    size = 0
+    for language in ["ar-en", "en-fr", "en-ru"]:
+        samples = read_samples(language)
+
+        for text, _ in samples:
+            size += len(text)
+
+    print(size)
+
+
 if __name__ == '__main__':
     # download_data()
     # read_samples("en-es")
     # get_bleu_scores()
     # benchmark()
-    predict_long_text()
+    # predict_long_text()
+    get_characters_to_translate()

@@ -1,5 +1,6 @@
-from src.data_model.Translation import Translation
-from src.data_model.TranslationTaskMessage import TranslationTaskMessage
+
+from data_model.Translation import Translation
+from data_model.TranslationTaskMessage import TranslationTaskMessage
 
 
 class TranslationResponseMessage(TranslationTaskMessage):

@@ -1,3 +1,8 @@
 -r requirements.txt
 pytest==8.2.2
 black==24.4.2
+fast-bleu==0.0.90
+huggingface_hub==0.23.4
+requests==2.32.3
+pyarrow==16.1.0
+pandas==2.2.2

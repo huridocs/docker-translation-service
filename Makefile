@@ -22,13 +22,13 @@ remove_docker_images:
 	docker compose config --images | xargs docker rmi
 
 start:
-	docker compose -f docker-compose-gpu.yml up --build
+	docker compose -f docker-compose.yml up --build
 
-start_no_gpu:
-	docker compose up --build
+start-test:
+	docker compose -f docker-compose-test.yml up --build
 
 stop:
-	docker compose stop
+	docker compose -f docker-compose-test.yml stop
 
 test:
 	. .venv/bin/activate; command cd src; command python -m pytest

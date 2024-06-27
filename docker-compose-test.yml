@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  ollama-translations:
+    container_name: ollama-translations
+    image: ollama/ollama:latest
+    network_mode: host
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  worker_translations:
+    container_name: worker_translations
+    init: true
+    entrypoint: [ "python", "-m", "src.QueueProcessor" ]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+  redis_translations:
+    restart: unless-stopped
+    image: "redis:7.2"
+    command: redis-server
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    ports:
+      - "6379:6379"
+    network_mode: host

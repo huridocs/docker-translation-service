@@ -2,14 +2,22 @@
 
 We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki-NLP/opus-100) test set in Arabic, English, Spanish, French and Russian. The results are as follows:
 
+Performance
 
 | Model     | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
 |-----------|----------|----------------|-----------------|----------------|-----------------|
+| DeepL     |          | 38.00          | -               | 35.73          | 26.94           |
 | llama3-8b | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
 | aya-8b    | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
 | aya-8b    | Prompt 2 | 27.73          | -               | -              | 20              |
+| aya-35b   | Prompt 2 | -              | -               | -              | -               |
+| glm-Q4    | Prompt 2 | -              | -               | -              | -               |
 
-(The scores have been calculated with fast-bleu https://pypi.org/project/fast-bleu/)
+
+
+
+
+(The scores have been calculated with fast-bleu https://pypi.org/project/fast-bleu/ using the average score for bigrams and trigrams)
 
 Prompts legend:
 
@@ -26,6 +34,29 @@ Prompts legend:
 Here is the text to be translated:  
 """
 
+
+Speed
+
+| Model     | 1 sentence |
+|-----------|------------|
+| DeepL     | 0.4s       |
+| llama3-8b | 0.86s      |
+| aya-8b    | 0.925s     |
+
+
+
+
+# BLEU Score
+
+| BLEU SCORE | INTERPRETATION                                       |
+|------------|------------------------------------------------------|
+| < 10       | Almost useless                                       |
+| 10 - 19    | Hard to get the gist                                 |
+| 20 - 29    | The gist is clear, but has significant errors        |
+| 30 - 40    | Understandable to good translations                  |
+| 40 - 50    | High quality translations                            |
+| 50 - 60    | Very high quality, adequate, and fluent translations |
+| > 60       | Quality often better than human                      |
 
 # docker-translation-service
 
