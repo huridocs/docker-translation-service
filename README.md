@@ -2,17 +2,29 @@
 
 We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki-NLP/opus-100) test set in Arabic, English, Spanish, French and Russian. The results are as follows:
 
-| Model  | promt        | Arabic | English    | Spanish | French   | Russian |
-|--------|--------------|---------|------------|--------|----------|---------|
-| llama3 | promt 1      | 0.950   | 0.939      | 0.968  | 0.981    | 0.981   |
+
+| Model     | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
+|-----------|----------|----------------|-----------------|----------------|-----------------|
+| llama3-8b | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
+| aya-8b    | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
+| aya-8b    | Prompt 2 | 27.73          | -               | -              | 20              |
+
+(The scores have been calculated with fast-bleu https://pypi.org/project/fast-bleu/)
+
+Prompts legend:
 
 
+- Prompt 1: "Translate the below text to {translation_task.language_to}, "
+             "keep the layout, do not skip any text, do not output anything else besides translation:"
 
-promts legend:
+- Prompt 2: """Please translate the following text into {translation_task.language_to}. Follow these guidelines:  
+      1. Maintain the original layout and formatting.  
+      2. Translate all text accurately without omitting any part of the content.  
+      3. Preserve the tone and style of the original text.  
+      4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.  
 
-
-1. promt 1: ""
-2. promt 2: "
+Here is the text to be translated:  
+"""
 
 
 # docker-translation-service
