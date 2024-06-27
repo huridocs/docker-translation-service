@@ -1,18 +1,28 @@
 import logging
+import os
 from pathlib import Path
 
+import graypy
 
 SRC_PATH = Path(__file__).parent.absolute()
 ROOT_PATH = Path(__file__).parent.parent.absolute()
 MODEL = "aya:35b"
 TRANSLATIONS_PORT = 11434
-LANGUAGES_SHORT = ["en", "fr", "es", "ru", "ar"]
-LANGUAGES = ["English", "French", "Spanish", "Russian", "Arabic"]
+LANGUAGES_SHORT = ["en", "fr", "es", "ru", "ar", "sp"]
+LANGUAGES = ["English", "French", "Spanish", "Russian", "Arabic", "Spanish"]
 
 TASK_QUEUE_NAME = "translation_tasks"
 RESULTS_QUEUE_NAME = "translation_results"
 
+GRAYLOG_IP = os.environ.get("GRAYLOG_IP")
+REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+
 handlers = [logging.StreamHandler()]
+
+if GRAYLOG_IP:
+    handlers.append(graypy.GELFUDPHandler(GRAYLOG_IP, 12201, localname="pdf_metadata_extraction"))
+
 logging.root.handlers = []
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", handlers=handlers)
 service_logger = logging.getLogger(__name__)

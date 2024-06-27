@@ -1,13 +1,19 @@
 from ollama import Client
 from data_model.Translation import Translation
 from data_model.TranslationTask import TranslationTask
-from configuration import MODEL, TRANSLATIONS_PORT
+from configuration import MODEL, TRANSLATIONS_PORT, LANGUAGES_SHORT, LANGUAGES, service_logger
 
 client = Client(host=f"http://localhost:{TRANSLATIONS_PORT}")
 
 
 def get_content(translation_task: TranslationTask):
-    content = f"""Please translate the following text into {translation_task.language_to}. Follow these guidelines:
+    language_to_name = "English"
+    languages_to = [x for x in LANGUAGES_SHORT if translation_task.language_to.lower()[:2] == x]
+
+    if languages_to:
+        language_to_name = LANGUAGES[LANGUAGES_SHORT.index(languages_to[0])]
+
+    content = f"""Please translate the following text into {language_to_name}. Follow these guidelines:
 1. Maintain the original layout and formatting.
 2. Translate all text accurately without omitting any part of the content.
 3. Preserve the tone and style of the original text.
@@ -20,12 +26,25 @@ Here is the text to be translated:
 
 
 def get_translation(translation_task: TranslationTask) -> Translation:
-    translation_task = TranslationTask(text="hola", language_from="es", language_to="fr")
     content = get_content(translation_task)
-    response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
-    return Translation(
-        text=response["message"]["content"],
-        language=translation_task.language_to,
-        success=True,
-        error_message="",
-    )
+
+    try:
+        response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
+
+        return Translation(
+            text=response["message"]["content"],
+            language=translation_task.language_to,
+            success=True,
+            error_message="",
+        )
+    except:
+        # Check error name when the server is no available
+        service_logger.error("Translations service not available")
+        return Translation(
+            text="",
+            language=translation_task.language_to,
+            success=False,
+            error_message="Translations service not available",
+        )
+
+

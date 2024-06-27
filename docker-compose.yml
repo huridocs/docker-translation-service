@@ -1,19 +1,12 @@
 version: '3.8'
 
 services:
-
   ollama-translations:
+    container_name: ollama-translations
+    image: ollama/ollama:latest
+    network_mode: host
     volumes:
       - ./ollama/ollama:/root/.ollama
-    container_name: ollama-translations
-    pull_policy: always
-    tty: true
-    restart: unless-stopped
-    image: ollama/ollama:latest
-    ports:
-      - 7869:11434
-    networks:
-      - ollama-docker
     deploy:
       resources:
         reservations:
@@ -21,7 +14,11 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-
-networks:
-  ollama-docker:
-    external: false
+  worker_translations:
+    container_name: worker_translations
+    init: true
+    entrypoint: [ "python", "-m", "src.QueueProcessor" ]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host

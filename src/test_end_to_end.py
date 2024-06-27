@@ -40,14 +40,16 @@ class TestEndToEnd(TestCase):
         self.assertEqual("es", results_message.language_from)
         self.assertEqual(["en", "fr"], results_message.languages_to)
         self.assertEqual(2, len(results_message.translations))
+
         en_translation = [translation for translation in results_message.translations if translation.language == "en"][0]
         self.assertEqual(True, en_translation.success)
         self.assertEqual("", en_translation.error_message)
+        self.assertNotEqual("", en_translation.text)
 
         fr_translation = [translation for translation in results_message.translations if translation.language == "fr"][0]
         self.assertEqual(True, fr_translation.success)
         self.assertEqual("", fr_translation.error_message)
-
+        self.assertNotEqual("", fr_translation.text)
 
     @staticmethod
     def get_results_message() -> TranslationResponseMessage:

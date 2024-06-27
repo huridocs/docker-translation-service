@@ -6,7 +6,7 @@ from pathlib import Path
 import deepl
 from tqdm import tqdm
 
-from benchmark_models import read_samples, get_bleu_scores
+from benchmark_models import read_samples, get_bleu_score
 from configuration import ROOT_PATH
 from data.deepl_api_key import DEEPL_API
 
@@ -54,7 +54,7 @@ def get_deepl_bleu_score(language: str):
     average_performance = 0
     for i, (text_from, text_to) in tqdm(enumerate(samples)):
         prediction = predictions[i]
-        average_performance += get_bleu_scores(text_to, prediction)
+        average_performance += get_bleu_score(text_to, prediction)
 
     print(f"Average performance: {100 * average_performance / len(samples)}")
 

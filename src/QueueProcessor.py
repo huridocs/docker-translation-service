@@ -5,7 +5,7 @@ from pydantic_core._pydantic_core import ValidationError
 from rsmq.consumer import RedisSMQConsumer
 from rsmq import RedisSMQ, cmd
 
-from configuration import TASK_QUEUE_NAME, RESULTS_QUEUE_NAME, service_logger
+from configuration import TASK_QUEUE_NAME, RESULTS_QUEUE_NAME, service_logger, REDIS_HOST, REDIS_PORT
 from data_model.TranslationResponseMessage import TranslationResponseMessage
 from data_model.TranslationTaskMessage import TranslationTaskMessage
 from translate import get_translation
@@ -14,14 +14,14 @@ from translate import get_translation
 class QueueProcessor:
     def __init__(self):
         self.task_queue = RedisSMQ(
-            host="127.0.0.1",
-            port=6379,
+            host=REDIS_HOST,
+            port=REDIS_PORT,
             qname=TASK_QUEUE_NAME,
         )
 
         self.results_queue = RedisSMQ(
-            host="127.0.0.1",
-            port=6379,
+            host=REDIS_HOST,
+            port=REDIS_PORT,
             qname=RESULTS_QUEUE_NAME,
         )
 
@@ -53,8 +53,8 @@ class QueueProcessor:
                 redis_smq_consumer = RedisSMQConsumer(
                     qname=TASK_QUEUE_NAME,
                     processor=self.process,
-                    host="127.0.0.1",
-                    port=6379,
+                    host=REDIS_HOST,
+                    port=REDIS_PORT,
                 )
                 redis_smq_consumer.run()
             except redis.exceptions.ConnectionError:

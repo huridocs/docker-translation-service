@@ -1,3 +1,6 @@
+import json
+import os
+from pathlib import Path
 from time import sleep, time
 
 import pandas as pd
@@ -10,17 +13,14 @@ from huggingface_hub import hf_hub_download
 from data_model.TranslationTask import TranslationTask
 from src.configuration import ROOT_PATH, LANGUAGES_SHORT, LANGUAGES
 from fast_bleu import BLEU
-from bleu import list_bleu
 from translate import get_content, client
-from configuration import cejil_1_page, cejil_2_page, cejil_3_page
+from configuration import cejil_3_page
 
 
 # MODELS = ["llama3", "tinyllama", "GLM-4"]
 LANGUAGES_PAIRS = ["en-ru"]
 
-# MODELS = ["llama3"]
-MODELS = ["aya"]
-# LANGUAGES_PAIRS = ["en-fr"]
+MODELS = ["aya:35b"]
 
 
 def download_data():
@@ -44,7 +44,7 @@ def read_samples(language_pair: str, limit: int = 0) -> list[tuple[str, str]]:
     return texts_translations
 
 
-def get_bleu_scores(correct_text: str, prediction: str):
+def get_bleu_score(correct_text: str, prediction: str):
     list_of_references = [correct_text.split()]
     hypotheses = [prediction.split()]
     weights = {'bigram': (1/2., 1/2.), 'trigram': (1/3., 1/3., 1/3.)}
@@ -60,23 +60,45 @@ def get_prediction(model: str, text: str, language_from: str,  language_to: str)
     return response["message"]["content"]
 
 
-def benchmark():
-    for model in MODELS:
-        for pair in LANGUAGES_PAIRS:
-            average_performance = 0
-            print(f"Model: {model}, Pair: {pair}")
-            samples = read_samples(pair)
-            total_time = 0
-            for from_text, human_translation in tqdm(samples):
-                language_from = LANGUAGES[LANGUAGES_SHORT.index(pair.split('-')[0])]
-                language_to = LANGUAGES[LANGUAGES_SHORT.index(pair.split('-')[1])]
-                start_time = time()
-                prediction = get_prediction(model, from_text, language_from, language_to)
-                total_time += time() - start_time
-                average_performance += get_bleu_scores(human_translation, prediction)
+def benchmark(model: str, language_pair: str):
+    root_path = Path(join(ROOT_PATH, "data", "predictions", model, language_pair))
 
-            print(f"Average performance: {100 * average_performance/len(samples)}")
-            print(f"Total time: {total_time} || Average time: {total_time/len(samples)}")
+    if not root_path.exists():
+        os.makedirs(root_path)
+
+    print(f"Model: {model}, Pair: {language_pair}")
+    samples = read_samples(language_pair)
+    translations = list()
+    for i, (from_text, human_translation) in tqdm(enumerate(samples)):
+        batch = i // 50
+        path = Path(join(root_path, str(batch) + ".json"))
+        if path.exists():
+            print('skipping batch', batch, '...')
+            continue
+
+        language_from = language_pair.split('-')[0]
+        language_to = language_pair.split('-')[1]
+
+        prediction = get_prediction(model, from_text, language_from, language_to)
+        translations.append(prediction)
+
+        if (i + 1) % 50 == 0:
+            path.write_text(json.dumps(translations, indent=4))
+            translations = list()
+
+    get_performance(samples, root_path)
+
+
+def get_performance(samples: list[tuple[str, str]], path: Path):
+    predictions = list()
+    for file in sorted(os.listdir(path), key=lambda x: int(x.split('.')[0])):
+        predictions += json.loads(Path(join(path, file)).read_text())
+    average_performance = 0
+    for i, (text_from, text_to) in tqdm(enumerate(samples)):
+        prediction = predictions[i]
+        average_performance += get_bleu_score(text_to, prediction)
+
+    print(f"Average performance: {100 * average_performance / len(samples)}")
 
 
 def predict_long_text():
@@ -102,8 +124,6 @@ def get_characters_to_translate():
 
 if __name__ == '__main__':
     # download_data()
-    # read_samples("en-es")
-    # get_bleu_scores()
-    # benchmark()
+    benchmark("aya:35b", "en-ru")
     # predict_long_text()
-    get_characters_to_translate()
+    # get_characters_to_translate()
