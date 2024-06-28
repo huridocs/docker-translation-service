@@ -124,6 +124,17 @@ def get_characters_to_translate():
 
 if __name__ == '__main__':
     # download_data()
-    benchmark("aya:35b", "en-ru")
+    # benchmark("aya:35b", "en-fr")
     # predict_long_text()
     # get_characters_to_translate()
+
+    content = f"""Please translate the following text into Spanish. Follow these guidelines:
+    1. Maintain the original layout and formatting.
+    2. Translate all text accurately without omitting any part of the content.
+    3. Preserve the tone and style of the original text.
+    4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
+
+    Here is the text to be translated: Hola
+    """
+    response = client.chat(model="/home/gabo/projects/llama.cpp/models/7B/ggml-model-f16.gguf", messages=[{"role": "user", "content": content}])
+    print(response)

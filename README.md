@@ -10,8 +10,8 @@ Performance
 | llama3-8b | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
 | aya-8b    | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
 | aya-8b    | Prompt 2 | 27.73          | -               | -              | 20              |
-| aya-35b   | Prompt 2 | -              | -               | -              | -               |
-| glm-Q4    | Prompt 2 | -              | -               | -              | -               |
+| aya-35b   | Prompt 2 | 31.89          | -               | 32.57          | 22.91           |
+| glm-BF16  | Prompt 2 | -              | -               | -              | -               |
 
 
 
@@ -42,6 +42,7 @@ Speed
 | DeepL     | 0.4s       |
 | llama3-8b | 0.86s      |
 | aya-8b    | 0.925s     |
+| aya-35b   | 3.3s       |
 
 
 
@@ -89,3 +90,4 @@ docker exec -it ollama-translations ollama pull aya:35b
 
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
 curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
+curl http://localhost:8080/api/generate -d '{ "model": "glm-4-9b-chat", "prompt": "What is water made of?" }'
