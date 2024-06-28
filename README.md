@@ -12,6 +12,7 @@ Performance
 | aya-8b    | Prompt 2 | 27.73          | -               | -              | 20              |
 | aya-35b   | Prompt 2 | 31.89          | -               | 32.57          | 22.91           |
 | glm-BF16  | Prompt 2 | -              | -               | -              | -               |
+| gemma2:27b| Prompt 2 | -              | -               | -              | -               |
 
 
 
@@ -37,12 +38,13 @@ Here is the text to be translated:
 
 Speed
 
-| Model     | 1 sentence |
-|-----------|------------|
-| DeepL     | 0.4s       |
-| llama3-8b | 0.86s      |
-| aya-8b    | 0.925s     |
-| aya-35b   | 3.3s       |
+| Model        | 1 sentence |
+|--------------|------------|
+| DeepL        | 0.4s       |
+| llama3-8b    | 0.86s      |
+| aya-8b       | 0.925s     |
+| aya-35b      | 3.3s       |
+| gemma2:27b   | 1.4s       |
 
 
 
@@ -87,6 +89,7 @@ docker start ollama
 docker exec -it ollama ollama run aya:35b
 docker exec -it ollama-translations ollama pull tinyllama
 docker exec -it ollama-translations ollama pull aya:35b
+docker exec -it ollama-translations ollama pull gemma2:27b
 
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
 curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'

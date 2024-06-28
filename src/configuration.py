@@ -7,8 +7,8 @@ import graypy
 SRC_PATH = Path(__file__).parent.absolute()
 ROOT_PATH = Path(__file__).parent.parent.absolute()
 MODEL = "aya:35b"
-# TRANSLATIONS_PORT = 11434
-TRANSLATIONS_PORT = 8080
+TRANSLATIONS_PORT = 11434
+# TRANSLATIONS_PORT = 8080
 LANGUAGES_SHORT = ["en", "fr", "es", "ru", "ar", "sp"]
 LANGUAGES = ["English", "French", "Spanish", "Russian", "Arabic", "Spanish"]
 

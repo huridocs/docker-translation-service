@@ -1,3 +1,4 @@
+import httpx
 from ollama import Client
 from data_model.Translation import Translation
 from data_model.TranslationTask import TranslationTask
@@ -21,6 +22,12 @@ def get_content(translation_task: TranslationTask):
 
 Here is the text to be translated:
 """
+
+#     content = f"""Please translate the following text into {language_to_name}. Follow these guidelines:
+# 1. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
+#
+# Here is the text to be translated:
+# """
     content += "\n\n" + translation_task.text
     return content
 
@@ -37,14 +44,11 @@ def get_translation(translation_task: TranslationTask) -> Translation:
             success=True,
             error_message="",
         )
-    except:
-        # Check error name when the server is no available
-        service_logger.error("Translations service not available")
+    except (httpx.ConnectError, httpx.HTTPStatusError, KeyError):
+        service_logger.error("Translations service not available", exc_info=True)
         return Translation(
             text="",
             language=translation_task.language_to,
             success=False,
             error_message="Translations service not available",
         )
-
-
