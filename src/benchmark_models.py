@@ -18,7 +18,8 @@ from configuration import cejil_3_page
 
 
 # MODELS = ["llama3", "tinyllama", "GLM-4"]
-LANGUAGES_PAIRS = ["en-ru"]
+# LANGUAGES_PAIRS = ["en-ru"]
+LANGUAGES_PAIRS = ["en-fr"]
 
 MODELS = ["aya:35b"]
 
@@ -125,7 +126,8 @@ def get_characters_to_translate():
 if __name__ == '__main__':
     # download_data()
     # benchmark("gemma2:27b", "en-ru")
-    benchmark("aya:35b", "en-ru")
+    # benchmark("aya:35b", "en-ru")
+    benchmark("gemma2:27b", "en-fr")
     # samples = read_samples("en-ru")
     print('s')
     # predict_long_text()

@@ -4,15 +4,19 @@ We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki
 
 Performance
 
-| Model     | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
-|-----------|----------|----------------|-----------------|----------------|-----------------|
-| DeepL     |          | 38.00          | -               | 35.73          | 26.94           |
-| llama3-8b | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
-| aya-8b    | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
-| aya-8b    | Prompt 2 | 27.73          | -               | -              | 20              |
-| aya-35b   | Prompt 2 | 31.89          | -               | 32.57          | 22.91           |
-| glm-BF16  | Prompt 2 | -              | -               | -              | -               |
-| gemma2:27b| Prompt 2 | -              | -               | -              | -               |
+| Model      | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
+|------------|----------|----------------|-----------------|----------------|-----------------|
+| DeepL      |          | 38.00          | -               | 35.73          | 26.94           |
+| aya-35b    | Prompt 2 | 31.89          | -               | 32.57          | 22.91           |
+| aya-8b     | Prompt 2 | 27.73          | -               | -              | 20              |
+| aya-8b     | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
+| llama3-8b  | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
+| gemma2:27b | Prompt 2 | -              | -               | 21.58          | bad             |
+| mixtral    | Prompt 2 | no ar          | -               | 18.15          | no rus          |
+| glm-BF16   | Prompt 2 | -              | -               | -              | -               |
+
+
+
 
 
 
@@ -38,13 +42,14 @@ Here is the text to be translated:
 
 Speed
 
-| Model        | 1 sentence |
-|--------------|------------|
-| DeepL        | 0.4s       |
-| llama3-8b    | 0.86s      |
-| aya-8b       | 0.925s     |
-| aya-35b      | 3.3s       |
-| gemma2:27b   | 1.4s       |
+| Model      | 1 sentence |
+|------------|------------|
+| DeepL      | 0.4s       |
+| llama3-8b  | 0.86s      |
+| aya-8b     | 0.925s     |
+| aya-35b    | 3.3s       |
+| gemma2:27b | 1.4s       |
+| mixtral    | 2.5s       |
 
 
 
@@ -90,6 +95,7 @@ docker exec -it ollama ollama run aya:35b
 docker exec -it ollama-translations ollama pull tinyllama
 docker exec -it ollama-translations ollama pull aya:35b
 docker exec -it ollama-translations ollama pull gemma2:27b
+docker exec -it ollama-translations ollama pull joefamous/mixtral:rtx4090
 
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
 curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
