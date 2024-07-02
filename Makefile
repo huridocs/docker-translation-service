@@ -34,4 +34,4 @@ test:
 	. .venv/bin/activate; command cd src; command python -m pytest
 
 start_detached:
-	docker compose -f docker-compose-test.yml up --build -d
+	. .venv/bin/activate; docker compose -f docker-compose-test.yml up --build -d; command python src/is_service_ready.py

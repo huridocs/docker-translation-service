@@ -36,11 +36,11 @@ class QueueProcessor:
         translations = [get_translation(translation_task) for translation_task in task_message.get_tasks()]
 
         response = TranslationResponseMessage(
-            **task_message.dict(),
+            **task_message.model_dump(),
             translations=translations,
         )
 
-        self.results_queue.sendMessage(delay=5).message(response.dict()).execute()
+        self.results_queue.sendMessage(delay=5).message(response.model_dump()).execute()
         return True
 
     def subscribe_to_tasks_queue(self):
