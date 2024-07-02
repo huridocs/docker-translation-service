@@ -7,13 +7,6 @@ services:
     network_mode: host
     volumes:
       - ./ollama/ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
   worker_translations:
     container_name: worker_translations
     init: true
