@@ -33,7 +33,7 @@ def get_translation(translation_task: TranslationTask) -> Translation:
     content = get_content(translation_task)
     try:
         models_list = client.list()
-        if 'models' not in models_list or MODEL not in [model["model"] for model in models_list['models']]:
+        if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
             client.pull(model=MODEL)
 
         response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
