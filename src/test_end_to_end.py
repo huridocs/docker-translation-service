@@ -4,7 +4,6 @@ from unittest import TestCase
 
 from rsmq import RedisSMQ
 
-from data_model.Translation import Translation
 from data_model.TranslationResponseMessage import TranslationResponseMessage
 from data_model.TranslationTaskMessage import TranslationTaskMessage
 
@@ -24,11 +23,9 @@ class TestEndToEnd(TestCase):
         QUEUE.sendMessage().message('{"message_to_ignore":"to_be_written_in_log_file"}').execute()
 
     def test_translations(self):
-        task = TranslationTaskMessage(namespace="namespace",
-                                      key=["key", "1"],
-                                      text="Hola",
-                                      language_from="es",
-                                      languages_to=["en", "fr"])
+        task = TranslationTaskMessage(
+            namespace="namespace", key=["key", "1"], text="Hola", language_from="es", languages_to=["en", "fr"]
+        )
 
         QUEUE.sendMessage(delay=0).message(task.model_dump_json()).execute()
 

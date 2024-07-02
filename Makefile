@@ -7,7 +7,7 @@ activate:
 install_venv:
 	python3 -m venv .venv
 	. .venv/bin/activate; python -m pip install --upgrade pip
-	. .venv/bin/activate; python -m pip install -r dev-requirements.txt
+	. .venv/bin/activate; python -m pip install -r requirements.txt
 
 formatter:
 	. .venv/bin/activate; command black --line-length 125 .
@@ -24,7 +24,7 @@ remove_docker_images:
 start:
 	docker compose -f docker-compose.yml up --build
 
-start-test:
+start_test:
 	docker compose -f docker-compose-test.yml up --build
 
 stop:
@@ -34,5 +34,4 @@ test:
 	. .venv/bin/activate; command cd src; command python -m pytest
 
 start_detached:
-	mkdir -p ./models
-	docker compose up --build -d
+	docker compose up -f docker-compose-test.yml --build -d

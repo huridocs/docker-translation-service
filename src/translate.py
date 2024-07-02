@@ -1,3 +1,5 @@
+from time import time
+
 import httpx
 from ollama import Client
 from data_model.Translation import Translation
@@ -22,20 +24,18 @@ def get_content(translation_task: TranslationTask):
 
 Here is the text to be translated:
 """
-
-#     content = f"""Please translate the following text into {language_to_name}. Follow these guidelines:
-# 1. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
-#
-# Here is the text to be translated:
-# """
     content += "\n\n" + translation_task.text
     return content
 
 
 def get_translation(translation_task: TranslationTask) -> Translation:
+    service_logger.info(f"Using translation model {MODEL}")
     content = get_content(translation_task)
-
     try:
+        models_list = client.list()
+        if 'models' not in models_list or MODEL not in [model["model"] for model in models_list['models']]:
+            client.pull(model=MODEL)
+
         response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
 
         return Translation(

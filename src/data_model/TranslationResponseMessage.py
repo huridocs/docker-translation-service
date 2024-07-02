@@ -1,4 +1,3 @@
-
 from data_model.Translation import Translation
 from data_model.TranslationTaskMessage import TranslationTaskMessage
 

@@ -8,7 +8,8 @@ from tqdm import tqdm
 
 from benchmark_models import read_samples, get_bleu_score
 from configuration import ROOT_PATH
-from data.deepl_api_key import DEEPL_API
+
+# from data.deepl_api_key import DEEPL_API
 
 deepl_languages = ["ar-en", "en-fr", "en-ru"]
 
@@ -19,18 +20,18 @@ def get_deepl_translations(language: str):
 
     for i, (text_from, _) in tqdm(enumerate(samples)):
         batch = i // 50
-        print('batch', batch, '...')
+        print("batch", batch, "...")
         path = Path(join(ROOT_PATH, "deepl_results", language, str(batch) + ".json"))
 
         if path.exists():
-            print('skipping batch', batch, '...')
+            print("skipping batch", batch, "...")
             continue
 
         translator = deepl.Translator(DEEPL_API)
 
-        source_lang = language.split('-')[0]
+        source_lang = language.split("-")[0]
 
-        target_lang = language.split('-')[1]
+        target_lang = language.split("-")[1]
         target_lang = target_lang if target_lang != "en" else "en-US"
 
         result = translator.translate_text(text_from, source_lang=source_lang, target_lang=target_lang)
@@ -43,10 +44,11 @@ def get_deepl_translations(language: str):
 
 def get_deepl_bleu_score(language: str):
     samples = read_samples(language)
+    samples = samples[:100]
 
     predictions = list()
     path = join(ROOT_PATH, "deepl_results", language)
-    for file in sorted(listdir(path), key=lambda x: int(x.split('.')[0])):
+    for file in sorted(listdir(path), key=lambda x: int(x.split(".")[0])):
         predictions += json.loads(Path(join(path, file)).read_text())
 
     print(len(predictions))
@@ -59,6 +61,8 @@ def get_deepl_bleu_score(language: str):
     print(f"Average performance: {100 * average_performance / len(samples)}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # get_deepl_translations("en-fr")
     get_deepl_bleu_score("ar-en")
+    get_deepl_bleu_score("en-fr")
+    get_deepl_bleu_score("en-ru")

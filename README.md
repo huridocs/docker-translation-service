@@ -2,7 +2,7 @@
 
 We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki-NLP/opus-100) test set in Arabic, English, Spanish, French and Russian. The results are as follows:
 
-Performance
+Performance 2000 samples
 
 | Model      | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
 |------------|----------|----------------|-----------------|----------------|-----------------|
@@ -13,7 +13,17 @@ Performance
 | llama3-8b  | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
 | gemma2:27b | Prompt 2 | -              | -               | 21.58          | bad             |
 | mixtral    | Prompt 2 | no ar          | -               | 18.15          | no rus          |
-| glm-BF16   | Prompt 2 | -              | -               | -              | -               |
+
+
+
+Performance 100 samples
+
+| Model        | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
+|--------------|----------|----------------|-----------------|----------------|-----------------|
+| DeepL        |          | 33.11          | -               | 36.05          | 24.64           |
+| aya-35b      | Prompt 2 | 30.75          | -               | 31.48          | 20.06           |
+| glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
+| glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
 
 
 
@@ -92,10 +102,8 @@ or
 docker start ollama
 
 docker exec -it ollama ollama run aya:35b
-docker exec -it ollama-translations ollama pull tinyllama
 docker exec -it ollama-translations ollama pull aya:35b
-docker exec -it ollama-translations ollama pull gemma2:27b
-docker exec -it ollama-translations ollama pull joefamous/mixtral:rtx4090
+docker exec -it ollama-translations ollama pull qwen:0.5b-text-v1.5-q2_K
 
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
 curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
