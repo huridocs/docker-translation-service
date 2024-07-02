@@ -30,8 +30,5 @@ jobs:
     - name: Start service
       run: make start_detached
 
-    - name: Wait for service to start
-      run: make wait_for_service
-
     - name: Test with unittest
       run: make test
