@@ -10,3 +10,4 @@ torchvision
 torchaudio
 tiktoken
 accelerate
+pip-upgrader==1.4.15

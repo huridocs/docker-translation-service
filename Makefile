@@ -24,7 +24,7 @@ remove_docker_images:
 start:
 	docker compose -f docker-compose.yml up --build
 
-start_test:
+start-test:
 	docker compose -f docker-compose-test.yml up --build
 
 stop:
@@ -35,3 +35,6 @@ test:
 
 start_detached:
 	. .venv/bin/activate; docker compose -f docker-compose-test.yml up --build -d; command python src/is_service_ready.py
+
+upgrade:
+	. .venv/bin/activate; pip-upgrade
