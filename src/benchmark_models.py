@@ -12,15 +12,13 @@ from huggingface_hub import hf_hub_download
 
 from data_model.TranslationTask import TranslationTask
 from glm_run import get_glm_prediction
-from src.configuration import ROOT_PATH, LANGUAGES_SHORT, LANGUAGES
+from src.configuration import ROOT_PATH
 from fast_bleu import BLEU
 from translate import get_content, client
-from configuration import cejil_3_page
-
 
 # MODELS = ["llama3", "tinyllama", "GLM-4"]
-# LANGUAGES_PAIRS = ["en-ru"]
-LANGUAGES_PAIRS = ["en-es"]
+LANGUAGES_PAIRS = ["en-ru"]
+# LANGUAGES_PAIRS = ["en-es"]
 
 MODELS = ["aya:35b"]
 
@@ -82,11 +80,7 @@ def benchmark(model: str, language_pair: str, limit: int = 0):
 
         language_from = language_pair.split("-")[0]
         language_to = language_pair.split("-")[1]
-
-        if model == "glm-BF16-120":
-            prediction = get_glm_prediction(from_text, language_from, language_to)
-        else:
-            prediction = get_prediction(model, from_text, language_from, language_to)
+        prediction = get_prediction(model, from_text, language_from, language_to)
         translations.append(prediction)
 
         if (i + 1) % 50 == 0:
@@ -132,6 +126,5 @@ def get_characters_to_translate():
 if __name__ == "__main__":
     download_data()
     # benchmark("aya:35b", "ar-en", 100)
-    benchmark("glm-BF16-120", "en-fr", 100)
-    benchmark("glm-BF16-120", "en-ru", 100)
-    benchmark("glm-BF16-120", "ar-en", 100)
+    # benchmark("glm4:9b", "en-fr", 100)
+    benchmark("glm4:9b", "ar-en", 100)

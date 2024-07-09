@@ -3,7 +3,7 @@ version: '3.8'
 services:
   ollama-translations:
     container_name: ollama-translations
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.2.1
     network_mode: host
     volumes:
       - ./ollama/ollama:/root/.ollama
