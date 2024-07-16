@@ -2,7 +2,7 @@
 fast-bleu==0.0.90
 huggingface_hub==0.23.4
 requests==2.32.3
-pyarrow==16.1.0
+pyarrow==17.0.0
 pandas==2.2.2
 transformers==4.42.4
 torch
