@@ -13,6 +13,7 @@ Performance 2000 samples
 | llama3-8b  | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
 | gemma2:27b | Prompt 2 | -              | -               | 21.58          | bad             |
 | mixtral    | Prompt 2 | no ar          | -               | 18.15          | no rus          |
+| llama3.1   | Prompt 2 | -              | 28.77           | 26.28          | -               |
 
 
 
@@ -25,6 +26,7 @@ Performance 100 samples
 | glm4:9b      | Prompt 2 | 19.62          | -               | 30.21          | 16.12           |
 | glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
 | glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
+| llama3.1     | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
 
 
 
