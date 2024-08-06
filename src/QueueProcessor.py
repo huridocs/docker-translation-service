@@ -39,9 +39,16 @@ class QueueProcessor:
         except BrokenPipeError:
             response = TranslationResponseMessage(
                 **task_message.model_dump(),
-                translations=[Translation(text=translation.text, language=translation.language_to, success=False,
-                                          error_message="Server unavailable") for translation in
-                              task_message.get_tasks()])
+                translations=[
+                    Translation(
+                        text=translation.text,
+                        language=translation.language_to,
+                        success=False,
+                        error_message="Server unavailable",
+                    )
+                    for translation in task_message.get_tasks()
+                ],
+            )
 
             self.results_queue.sendMessage(delay=5).message(response.model_dump()).execute()
             return True
