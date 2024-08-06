@@ -6,6 +6,7 @@ from rsmq.consumer import RedisSMQConsumer
 from rsmq import RedisSMQ, cmd
 
 from configuration import TASK_QUEUE_NAME, RESULTS_QUEUE_NAME, service_logger, REDIS_HOST, REDIS_PORT
+from data_model.Translation import Translation
 from data_model.TranslationResponseMessage import TranslationResponseMessage
 from data_model.TranslationTaskMessage import TranslationTaskMessage
 from translate import get_translation
@@ -33,7 +34,17 @@ class QueueProcessor:
             service_logger.error(f"Not a valid Redis message: {message}")
             return True
 
-        translations = [get_translation(translation_task) for translation_task in task_message.get_tasks()]
+        try:
+            translations = [get_translation(translation_task) for translation_task in task_message.get_tasks()]
+        except BrokenPipeError:
+            response = TranslationResponseMessage(
+                **task_message.model_dump(),
+                translations=[Translation(text=translation.text, language=translation.language_to, success=False,
+                                          error_message="Server unavailable") for translation in
+                              task_message.get_tasks()])
+
+            self.results_queue.sendMessage(delay=5).message(response.model_dump()).execute()
+            return True
 
         response = TranslationResponseMessage(
             **task_message.model_dump(),

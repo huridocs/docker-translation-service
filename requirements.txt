@@ -5,3 +5,4 @@ redis==5.0.7
 PyRSMQ==0.5.1
 pytest==8.2.2
 black==24.4.2
+git+https://github.com/huridocs/ml-cloud-connector.git@7f8abdce4ec8f8d4ba51f373aad4e08610bc79e9
