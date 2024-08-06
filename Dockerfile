@@ -1,6 +1,6 @@
 FROM python:3.12-slim-bullseye
 
-RUN apt-get update
+RUN apt-get update ; apt install git -y
 
 RUN mkdir -p /app/src
 

@@ -1,12 +1,10 @@
-from time import time
-
 import httpx
+from ml_cloud_connector.MlCloudConnector import MlCloudConnector
 from ollama import Client
+
 from data_model.Translation import Translation
 from data_model.TranslationTask import TranslationTask
-from configuration import MODEL, TRANSLATIONS_PORT, LANGUAGES_SHORT, LANGUAGES, service_logger
-
-client = Client(host=f"http://localhost:{TRANSLATIONS_PORT}")
+from configuration import MODEL, LANGUAGES_SHORT, LANGUAGES, service_logger, TRANSLATIONS_PORT
 
 
 def get_content(translation_task: TranslationTask):
@@ -29,7 +27,10 @@ Here is the text to be translated:
 
 
 def get_translation(translation_task: TranslationTask) -> Translation:
-    service_logger.info(f"Using translation model {MODEL}")
+    ip_address = MlCloudConnector().get_ip()
+    client = Client(host=f"http://{ip_address}:{TRANSLATIONS_PORT}")
+
+    service_logger.info(f"Using translation model {MODEL} on ip {ip_address}")
     content = get_content(translation_task)
     try:
         models_list = client.list()
