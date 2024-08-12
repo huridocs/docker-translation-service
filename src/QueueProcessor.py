@@ -1,3 +1,4 @@
+import os
 from time import sleep
 
 import redis
@@ -10,6 +11,9 @@ from data_model.Translation import Translation
 from data_model.TranslationResponseMessage import TranslationResponseMessage
 from data_model.TranslationTaskMessage import TranslationTaskMessage
 from translate import get_translation
+
+from sentry_sdk.integrations.redis import RedisIntegration
+import sentry_sdk
 
 
 class QueueProcessor:
@@ -83,5 +87,14 @@ class QueueProcessor:
 
 
 if __name__ == "__main__":
+    try:
+        sentry_sdk.init(
+            os.environ.get("SENTRY_DSN"),
+            traces_sample_rate=0.1,
+            environment=os.environ.get("ENVIRONMENT", "development"),
+            integrations=[RedisIntegration()],
+        )
+    except Exception:
+        pass
     queue_processor = QueueProcessor()
     queue_processor.subscribe_to_tasks_queue()
