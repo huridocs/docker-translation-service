@@ -12,9 +12,8 @@ if __name__ == "__main__":
         "the design of methods for evaluating the quality of the videos has received much less attention."
     )
     language_from = "English"
-    language_to = "Turkish"
+    language_to = "French"
     translation_task = TranslationTask(text=text, language_from=language_from, language_to=language_to)
     translation = get_translation(translation_task)
     print(translation)
-    print(type(translation))
     print("time", round(time() - start, 2), "s")
