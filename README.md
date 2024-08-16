@@ -1,3 +1,55 @@
+# Languages
+
+The model used covers the following 23 languages:
+
+Arabic, Chinese (simplified & traditional), Czech, Dutch, English, French, German, Greek, Hebrew, Hindi, Indonesian, Italian, Japanese, Korean, Persian, Polish, Portuguese, Romanian, Russian, Spanish, Turkish, Ukrainian, and Vietnamese.
+
+
+# How to use it
+
+The translation service communicates exclusively through Redis
+
+
+Queues names:
+
+* translation_tasks
+* translation_results
+
+
+Query Object
+
+    namespace: str
+    key: list[str]
+    text: str
+    language_from: str
+    languages_to: list[str]
+
+
+Result object
+
+    namespace: str
+    key: list[str]
+    text: str
+    language_from: str
+    languages_to: list[str]
+    translations: list[Translation]
+    Translation object
+
+Translation object
+
+    text: str
+    language: str
+    success: bool
+    error_message: str
+
+
+# Dummy translations
+
+Use the dummy service to test the translation service
+
+https://github.com/huridocs/dummy_extractor_services
+
+
 # Results
 
 We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki-NLP/opus-100) test set in Arabic, English, Spanish, French and Russian. The results are as follows:
