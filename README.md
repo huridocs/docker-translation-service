@@ -117,6 +117,8 @@ curl http://localhost:8080/api/generate -d '{ "model": "glm-4-9b-chat", "prompt"
 # Deployment
 
 * For development purposes we can use dummy_extractor_services
+  * If the language is "error" then the translation server returns an error
+  * The other languages are returned with the text [translation for {language}] and the input text without been translated 
 * Run it with "make docker" for having a docker container running mocking the translation service
 * The deployment script is found in the "deployment repo" branch translations-service
 * We have to set up a Google cloud server for this to run using GPUs 
