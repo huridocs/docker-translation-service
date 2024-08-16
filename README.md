@@ -112,3 +112,16 @@ docker exec -it ollama-translations ollama pull qwen:0.5b-text-v1.5-q2_K
 curl http://localhost:11434/api/generate -d '{ "model": "aya:35b", "prompt": "What is water made of?" }'
 curl http://localhost:7869/api/generate -d '{ "model": "tinyllama", "prompt": "What is water made of?" }'
 curl http://localhost:8080/api/generate -d '{ "model": "glm-4-9b-chat", "prompt": "What is water made of?" }'
+
+
+# Deployment
+
+* For development purposes we can use dummy_extractor_services
+* Run it with "make docker" for having a docker container running mocking the translation service
+* The deployment script is found in the "deployment repo" branch translations-service
+* We have to set up a Google cloud server for this to run using GPUs 
+  * or use a 24Gb ram server
+* For deployment, we need the following environment variables: PROJECT_ID, INSTANCE_ID, ZONE, CREDENTIALS
+* CREDENTIALS are found on the file /home/[user]/.config/gcloud/application_default_credentials.json
+* The rest of variables are found on the Google Cloud Console
+
