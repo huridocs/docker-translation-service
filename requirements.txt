@@ -3,7 +3,7 @@ ollama==0.2.1
 graypy==2.1.0
 redis==5.0.7
 PyRSMQ==0.5.1
-pytest==8.2.2
+pytest==8.3.2
 black==24.4.2
 sentry_sdk==1.44.0
 git+https://github.com/huridocs/ml-cloud-connector.git@820fbde13c5f03cf7db781023e0f837f0c8635e6
