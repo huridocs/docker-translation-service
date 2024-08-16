@@ -7,7 +7,8 @@ Arabic, Chinese (simplified & traditional), Czech, Dutch, English, French, Germa
 
 # How to use it
 
-The translation service communicates exclusively through Redis
+The translation service communicates exclusively through Redis queues. 
+The service listens to the `translation_tasks` queue and writes the results to the `translation_results` queue.
 
 
 Queues names:
