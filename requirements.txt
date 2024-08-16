@@ -6,4 +6,4 @@ PyRSMQ==0.5.1
 pytest==8.2.2
 black==24.4.2
 sentry_sdk==1.44.0
-git+https://github.com/huridocs/ml-cloud-connector.git@8fdd406433b2114887a8b3576132bfe5cf12347f
+git+https://github.com/huridocs/ml-cloud-connector.git@820fbde13c5f03cf7db781023e0f837f0c8635e6
