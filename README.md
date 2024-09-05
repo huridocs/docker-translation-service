@@ -58,15 +58,16 @@ We are using the Helsinki-NLP/opus-100 (https://huggingface.co/datasets/Helsinki
 Performance 2000 samples
 
 | Model      | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
-|------------|----------|----------------|-----------------|----------------|-----------------|
-| DeepL      |          | 38.00          | -               | 35.73          | 26.94           |
-| aya-35b    | Prompt 2 | 31.89          | -               | 32.57          | 22.91           |
-| aya-8b     | Prompt 2 | 27.73          | -               | -              | 20              |
-| aya-8b     | Prompt 1 | 27.75          | 30.22           | 28.65          | 19.6            |
-| llama3-8b  | Prompt 1 | 19.4           | 29.38           | 27.03          | 15.73           |
-| gemma2:27b | Prompt 2 | -              | -               | 21.58          | bad             |
-| mixtral    | Prompt 2 | no ar          | -               | 18.15          | no rus          |
-| llama3.1   | Prompt 2 | -              | 28.77           | 26.28          | -               |
+|------------|----------|----------------|----------------|----------------|-----------------|
+| DeepL      |          | 38.00          | -              | 35.73          | 26.94           |
+| aya-35b    | Prompt 2 | 31.89          | -              | 32.57          | 22.91           |
+| aya-8b     | Prompt 2 | 27.73          | -              | -              | 20              |
+| aya-8b     | Prompt 1 | 27.75          | 30.22          | 28.65          | 19.6            |
+| command-r  | Prompt 2 | 24.07          | 26.2           | 27.88          | -               |
+| llama3-8b  | Prompt 1 | 19.4           | 29.38          | 27.03          | 15.73           |
+| gemma2:27b | Prompt 2 | -              | -              | 21.58          | bad             |
+| mixtral    | Prompt 2 | no ar          | -              | 18.15          | no rus          |
+| llama3.1   | Prompt 2 | -              | 28.77          | 26.28          | -               |
 
 
 
@@ -84,8 +85,12 @@ Performance 100 samples
 
 
 
+## GPU Performance Comparison
 
-
+| Setup                    | Iteration 1 (seconds)                 | Iteration 2 (seconds) | Iteration 3 (seconds) | Total Time for All Rounds (seconds) |
+|--------------------------|---------------------------------------|-----------------------|-----------------------|-------------------------------------|
+| **1 x NVIDIA L4 (1 x 24 GB)** | 758.91 (including model loading time) | 599.78                | 617.81                | 1976.5                              |
+| **2 x NVIDIA T4 (2x16 GB)** | 781.4 (including model loading time)  | 731.8                 | 697.23                | 2210.42                             |
 
 
 (The scores have been calculated with fast-bleu https://pypi.org/project/fast-bleu/ using the average score for bigrams and trigrams)
