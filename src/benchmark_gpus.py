@@ -144,7 +144,7 @@ Here is the text to be translated:
                         "role": "user",
                         "content": translation_content,
                     }
-                ]
+                ],
             )
         iteration_time = round(time() - iteration_time_start, 2)
         print(f"Iteration {i+1} finished in {iteration_time} seconds.")
@@ -153,5 +153,5 @@ Here is the text to be translated:
     print("[Iteration 1 also includes model loading time]")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     benchmark()
