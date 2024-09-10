@@ -4,7 +4,6 @@ from data_model.TranslationTask import TranslationTask
 
 
 class TranslationTaskMessage(BaseModel):
-    namespace: str | None
     key: str | list[str]
     text: str
     language_from: str | None

@@ -23,15 +23,12 @@ class TestEndToEnd(TestCase):
         QUEUE.sendMessage().message('{"message_to_ignore":"to_be_written_in_log_file"}').execute()
 
     def test_translations(self):
-        task = TranslationTaskMessage(
-            namespace="namespace", key=["key", "1"], text="Hola", language_from="es", languages_to=["en", "fr"]
-        )
+        task = TranslationTaskMessage(key=["key", "1"], text="Hola", language_from="es", languages_to=["en", "fr"])
 
         QUEUE.sendMessage(delay=0).message(task.model_dump_json()).execute()
 
         results_message = self.get_results_message()
 
-        self.assertEqual("namespace", results_message.namespace)
         self.assertEqual(["key", "1"], results_message.key)
         self.assertEqual("Hola", results_message.text)
         self.assertEqual("es", results_message.language_from)
