@@ -10,8 +10,7 @@ TRANSLATIONS_PORT = 11434
 LANGUAGES_SHORT = ["en", "fr", "es", "ru", "ar", "sp"]
 LANGUAGES = ["English", "French", "Spanish", "Russian", "Arabic", "Spanish"]
 
-TASK_QUEUE_NAME = "translation_tasks"
-RESULTS_QUEUE_NAME = "translation_results"
+QUEUES_NAMES = os.environ.get("QUEUES_NAMES", "translation")
 
 GRAYLOG_IP = os.environ.get("GRAYLOG_IP")
 REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")

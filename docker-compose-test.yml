@@ -10,7 +10,7 @@ services:
   worker_translations:
     container_name: worker_translations
     init: true
-    entrypoint: [ "python", "-m", "src.QueueProcessor" ]
+    entrypoint: [ "python", "-m", "src.start_queue_processor" ]
     build:
       context: .
       dockerfile: Dockerfile

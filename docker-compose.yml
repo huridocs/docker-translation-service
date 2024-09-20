@@ -19,7 +19,7 @@ services:
     environment:
       LOGGING_LEVEL: "WARNING"
     init: true
-    entrypoint: [ "python", "-m", "src.QueueProcessor" ]
+    entrypoint: [ "python", "-m", "src.start_queue_processor" ]
     build:
       context: .
       dockerfile: Dockerfile
