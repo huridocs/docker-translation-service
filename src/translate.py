@@ -1,4 +1,3 @@
-import httpx
 from ml_cloud_connector.MlCloudConnector import MlCloudConnector
 from ollama import Client
 
@@ -27,29 +26,20 @@ Here is the text to be translated:
 
 
 def get_translation(translation_task: TranslationTask) -> Translation:
-    ip_address = MlCloudConnector().get_ip()
+    ip_address = MlCloudConnector("translation").get_ip()
     client = Client(host=f"http://{ip_address}:{TRANSLATIONS_PORT}")
 
     service_logger.info(f"Using translation model {MODEL} on ip {ip_address}")
     content = get_content(translation_task)
-    try:
-        models_list = client.list()
-        if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
-            client.pull(model=MODEL)
+    models_list = client.list()
+    if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
+        client.pull(model=MODEL)
 
-        response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
+    response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
 
-        return Translation(
-            text=response["message"]["content"],
-            language=translation_task.language_to,
-            success=True,
-            error_message="",
-        )
-    except (httpx.ConnectError, httpx.HTTPStatusError, KeyError):
-        service_logger.error("Translations service not available", exc_info=True)
-        return Translation(
-            text="",
-            language=translation_task.language_to,
-            success=False,
-            error_message="Translations service not available",
-        )
+    return Translation(
+        text=response["message"]["content"],
+        language=translation_task.language_to,
+        success=True,
+        error_message="",
+    )

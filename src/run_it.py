@@ -1,5 +1,5 @@
 from time import time
-
+from ml_cloud_connector.MlCloudConnector import MlCloudConnector
 from data_model.TranslationTask import TranslationTask
 from translate import get_translation
 
@@ -14,6 +14,7 @@ if __name__ == "__main__":
     language_from = "English"
     language_to = "French"
     translation_task = TranslationTask(text=text, language_from=language_from, language_to=language_to)
-    translation = get_translation(translation_task)
+    connector = MlCloudConnector("translation")
+    translation, finished, error = connector.execute(get_translation, connector.service_logger, translation_task)
     print(translation)
     print("time", round(time() - start, 2), "s")

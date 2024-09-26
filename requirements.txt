@@ -4,5 +4,5 @@ graypy==2.1.0
 pytest==8.2.2
 black==24.4.2
 sentry_sdk==1.44.0
-git+https://github.com/huridocs/ml-cloud-connector.git@820fbde13c5f03cf7db781023e0f837f0c8635e6
+git+https://github.com/huridocs/ml-cloud-connector.git@cba47e74916888ffb451951053740387548172a2
 git+https://github.com/huridocs/queue-processor@bab1f4419b0768df518d06795afd5df2ba0e331c
