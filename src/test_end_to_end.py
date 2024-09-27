@@ -13,7 +13,7 @@ REDIS_PORT = "6379"
 QUEUE = RedisSMQ(
     host=REDIS_HOST,
     port=REDIS_PORT,
-    qname="translation_tasks",
+    qname="translations_tasks",
     quiet=False,
 )
 
@@ -52,7 +52,7 @@ class TestEndToEnd(TestCase):
             queue = RedisSMQ(
                 host=REDIS_HOST,
                 port=REDIS_PORT,
-                qname="translation_results",
+                qname="translations_results",
                 quiet=False,
             )
             message = queue.receiveMessage().exceptions(False).execute()
