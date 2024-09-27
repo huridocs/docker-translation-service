@@ -13,8 +13,8 @@ The service listens to the `translation_tasks` queue and writes the results to t
 
 Queues names:
 
-* translation_tasks
-* translation_results
+* translations_tasks
+* translations_results
 
 
 Query Object
