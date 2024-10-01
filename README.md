@@ -50,6 +50,12 @@ Use the dummy service to test the translation service
 
 https://github.com/huridocs/dummy_extractor_services
 
+# Cloud times
+
+| Task            | Time   |
+|-----------------|--------|
+| Create instance | 10m    |
+| Start instance  | 1m 30s |
 
 # Results
 

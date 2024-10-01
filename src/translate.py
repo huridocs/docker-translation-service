@@ -1,3 +1,5 @@
+import subprocess
+
 from ml_cloud_connector.MlCloudConnector import MlCloudConnector
 from ml_cloud_connector.ServerType import ServerType
 from ollama import Client
@@ -26,17 +28,25 @@ Here is the text to be translated:
     return content
 
 
+def pull_model(client: Client):
+    models_list = client.list()
+    service_logger.info(f"Models list: {models_list["models"]}")
+    if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
+        client.pull(model=MODEL)
+
+
 def get_translation(translation_task: TranslationTask) -> Translation:
     ip_address = MlCloudConnector(ServerType.TRANSLATION, service_logger).get_ip()
     client = Client(host=f"http://{ip_address}:{TRANSLATIONS_PORT}")
 
     service_logger.info(f"Using translation model {MODEL} on ip {ip_address}")
     content = get_content(translation_task)
-    models_list = client.list()
-    if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
-        client.pull(model=MODEL)
+    pull_model(client)
 
-    response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
+    try:
+        response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
+    except Exception as e:
+        print(str(e))
 
     return Translation(
         text=response["message"]["content"],
