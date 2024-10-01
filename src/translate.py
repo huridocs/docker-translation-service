@@ -30,7 +30,6 @@ Here is the text to be translated:
 
 def pull_model(client: Client):
     models_list = client.list()
-    service_logger.info(f"Models list: {models_list["models"]}")
     if "models" not in models_list or MODEL not in [model["model"] for model in models_list["models"]]:
         client.pull(model=MODEL)
 
