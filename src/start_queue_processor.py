@@ -1,6 +1,7 @@
 import os
 
 from ml_cloud_connector.MlCloudConnector import MlCloudConnector
+from ml_cloud_connector.ServerType import ServerType
 from pydantic_core._pydantic_core import ValidationError
 from queue_processor.QueueProcessor import QueueProcessor
 
@@ -37,12 +38,12 @@ def get_translation_from_task(translation_task: TranslationTask):
     if not translation_task.text.strip():
         return get_empty_translation(translation_task)
 
-    connector = MlCloudConnector("translation")
-    translation, finished, error = connector.execute(get_translation, service_logger, translation_task)
+    ml_connector = MlCloudConnector(ServerType.TRANSLATION, service_logger)
+    translation, finished, error = ml_connector.execute_on_cloud_server(get_translation, service_logger, translation_task)
     return translation if finished else get_error_translation(translation_task, error)
 
 
-def process(message):
+def process(message: dict[any, any]) -> dict[any, any] | None:
     try:
         task_message = TranslationTaskMessage(**message)
         service_logger.info(f"New task {task_message.model_dump()}")

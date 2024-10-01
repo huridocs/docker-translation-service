@@ -1,5 +1,5 @@
 install:
-	. .venv/bin/activate; pip install -Ur requirements.txt
+	. .venv/bin/activate; pip install -Ur dev-requirements.txt
 
 activate:
 	. .venv/bin/activate
@@ -7,7 +7,7 @@ activate:
 install_venv:
 	python3 -m venv .venv
 	. .venv/bin/activate; python -m pip install --upgrade pip
-	. .venv/bin/activate; python -m pip install -r requirements.txt
+	. .venv/bin/activate; python -m pip install -r dev-requirements.txt
 
 formatter:
 	. .venv/bin/activate; command black --line-length 125 .
@@ -55,3 +55,6 @@ free_up_space:
 	sudo rm -rf /opt/hostedtoolcache/CodeQL
 	sudo docker image prune --all --force
 	df -h
+
+run_it:
+	. .venv/bin/activate; command python src/run_it.py

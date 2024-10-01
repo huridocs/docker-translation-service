@@ -1,8 +1,6 @@
 pydantic==2.8.2
 ollama==0.2.1
 graypy==2.1.0
-pytest==8.2.2
-black==24.4.2
 sentry_sdk==1.44.0
-git+https://github.com/huridocs/ml-cloud-connector.git@e6751aa2f519b1f4344a4e81a51b9c97fbbc6c7b
+git+https://github.com/huridocs/ml-cloud-connector.git@85e0ce5aad8d7428d15343188975b29e8f1d904e
 git+https://github.com/huridocs/queue-processor@bab1f4419b0768df518d06795afd5df2ba0e331c

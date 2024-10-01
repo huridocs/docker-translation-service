@@ -1,4 +1,5 @@
 from ml_cloud_connector.MlCloudConnector import MlCloudConnector
+from ml_cloud_connector.ServerType import ServerType
 from ollama import Client
 
 from data_model.Translation import Translation
@@ -26,7 +27,7 @@ Here is the text to be translated:
 
 
 def get_translation(translation_task: TranslationTask) -> Translation:
-    ip_address = MlCloudConnector("translation").get_ip()
+    ip_address = MlCloudConnector(ServerType.TRANSLATION, service_logger).get_ip()
     client = Client(host=f"http://{ip_address}:{TRANSLATIONS_PORT}")
 
     service_logger.info(f"Using translation model {MODEL} on ip {ip_address}")
