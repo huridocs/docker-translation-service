@@ -21,10 +21,11 @@ def get_content(translation_task: TranslationTask):
 2. Translate all text accurately without omitting any part of the content.
 3. Preserve the tone and style of the original text.
 4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
+5. Only translate the text between ``` and ```. Do not output any other text or character.
 
 Here is the text to be translated:
 """
-    content += "\n\n" + translation_task.text
+    content += "\n\n" + "```" + translation_task.text + "```"
     return content
 
 
@@ -42,13 +43,13 @@ def get_translation(translation_task: TranslationTask) -> Translation:
     content = get_content(translation_task)
     pull_model(client)
 
-    try:
-        response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
-    except Exception as e:
-        print(str(e))
+    response = client.chat(model=MODEL, messages=[{"role": "user", "content": content}])
+    response_content = response["message"]["content"]
+    if response_content.startswith("```") and response_content.endswith("```"):
+        response_content = response_content[3:-3]
 
     return Translation(
-        text=response["message"]["content"],
+        text=response_content,
         language=translation_task.language_to,
         success=True,
         error_message="",
