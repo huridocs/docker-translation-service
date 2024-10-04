@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      MODEL: "qwen:0.5b-text-v1.5-q2_K"
+      MODEL: "qwen2.5:0.5b"
     network_mode: host
   redis_translations:
     restart: unless-stopped

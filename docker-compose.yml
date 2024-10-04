@@ -18,7 +18,7 @@ services:
     container_name: worker_translations
     environment:
       LOGGING_LEVEL: "WARNING"
-      MODEL: "qwen:0.5b-text-v1.5-q2_K"
+      MODEL: "qwen2.5:0.5b"
     init: true
     entrypoint: [ "python", "-m", "src.start_queue_processor" ]
     build:
