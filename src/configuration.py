@@ -21,7 +21,7 @@ LOGGING_LEVEL = os.environ.get("LOGGING_LEVEL", "INFO")
 handlers = [logging.StreamHandler()]
 
 if GRAYLOG_IP:
-    handlers.append(graypy.GELFUDPHandler(GRAYLOG_IP, 12201, localname="pdf_metadata_extraction"))
+    handlers.append(graypy.GELFUDPHandler(GRAYLOG_IP, 12201, localname="translations_service"))
 
 logging.root.handlers = []
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", handlers=handlers)
