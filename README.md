@@ -86,7 +86,8 @@ Performance 100 samples
 | glm4:9b      | Prompt 2 | 19.62          | -               | 30.21          | 16.12           |
 | glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
 | glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
-| llama3.1     | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
+| llama3.1-8B  | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
+| llama3.2-3B  | Prompt 2 | -              | -               | 15.88          | -               |
 
 
 
@@ -104,17 +105,26 @@ Performance 100 samples
 Prompts legend:
 
 
-- Prompt 1: "Translate the below text to {translation_task.language_to}, "
+- Prompt 1: "Translate the below text to {language_to_name}, "
              "keep the layout, do not skip any text, do not output anything else besides translation:"
 
-- Prompt 2: """Please translate the following text into {translation_task.language_to}. Follow these guidelines:  
+- Prompt 2: """Please translate the following text into {language_to_name}. Follow these guidelines:  
       1. Maintain the original layout and formatting.  
       2. Translate all text accurately without omitting any part of the content.  
       3. Preserve the tone and style of the original text.  
       4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.  
 
-Here is the text to be translated:  
-"""
+Here is the text to be translated:  text """
+
+- Prompt 3: """Please translate the following text into {language_to_name}. Follow these guidelines:
+1. Maintain the original layout and formatting.
+2. Translate all text accurately without omitting any part of the content.
+3. Preserve the tone and style of the original text.
+4. Do not include any additional comments, notes, or explanations in the output; provide only the translated text.
+5. Only translate the text between ``` and ```. Do not output any other text or character.
+
+Here is the text to be translated:
+```text```"""
 
 
 Speed

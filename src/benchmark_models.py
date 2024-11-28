@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from time import sleep, time
+from time import time
 
 import pandas as pd
 from shutil import rmtree
@@ -11,10 +11,10 @@ from tqdm import tqdm
 from huggingface_hub import hf_hub_download
 
 from data_model.TranslationTask import TranslationTask
-from glm_run import get_glm_prediction
 from src.configuration import ROOT_PATH
 from fast_bleu import BLEU
-from translate import get_content, client
+from translate import get_content
+from ollama import Client
 
 # MODELS = ["llama3", "tinyllama", "GLM-4"]
 LANGUAGES_PAIRS = ["en-ru"]
@@ -56,7 +56,7 @@ def get_bleu_score(correct_text: str, prediction: str):
 def get_prediction(model: str, text: str, language_from: str, language_to: str):
     translation_task = TranslationTask(text=text, language_from=language_from, language_to=language_to)
     content = get_content(translation_task)
-    response = client.chat(model=model, messages=[{"role": "user", "content": content}])
+    response = Client().chat(model=model, messages=[{"role": "user", "content": content}])
     return response["message"]["content"]
 
 
@@ -127,4 +127,4 @@ if __name__ == "__main__":
     download_data()
     # benchmark("aya:35b", "ar-en", 100)
     # benchmark("glm4:9b", "en-fr", 100)
-    benchmark("glm4:9b", "ar-en", 100)
+    benchmark("llama3.2", "en-fr", 100)
