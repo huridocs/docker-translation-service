@@ -11,7 +11,6 @@ from tqdm import tqdm
 from huggingface_hub import hf_hub_download
 
 from data_model.TranslationTask import TranslationTask
-from src.configuration import ROOT_PATH
 from fast_bleu import BLEU
 from translate import get_content
 from ollama import Client
@@ -125,6 +124,10 @@ def get_characters_to_translate():
 
 if __name__ == "__main__":
     download_data()
+    start = time()
+    print("start")
+
     # benchmark("aya:35b", "ar-en", 100)
     # benchmark("glm4:9b", "en-fr", 100)
-    benchmark("llama3.2", "en-fr", 100)
+    benchmark("llama3.1", "en-fr")
+    print("time", round(time() - start, 2), "s")

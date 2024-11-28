@@ -87,7 +87,7 @@ Performance 100 samples
 | glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
 | glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
 | llama3.1-8B  | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
-| llama3.2-3B  | Prompt 2 | -              | -               | 15.88          | -               |
+| llama3.2-3B  | Prompt 3 | -              | -               | 15.88          | -               |
 
 
 
