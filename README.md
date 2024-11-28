@@ -82,12 +82,14 @@ Performance 100 samples
 | Model        | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
 |--------------|----------|----------------|-----------------|----------------|-----------------|
 | DeepL        |          | 33.11          | -               | 36.05          | 24.64           |
+| llama3.1:70B | Prompt 3 | -              | -               | 32.65          | -               |
 | aya-35b      | Prompt 2 | 30.75          | -               | 31.48          | 20.06           |
 | glm4:9b      | Prompt 2 | 19.62          | -               | 30.21          | 16.12           |
 | glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
 | glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
 | llama3.1-8B  | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
-| llama3.2-3B  | Prompt 3 | -              | -               | 15.88          | -               |
+| llama3.1-8B  | Prompt 3 | -              | -               | 26.57          | -               |
+| llama3.2-3B  | Prompt 3 | -              | -               | 19.70          | -               |
 
 
 

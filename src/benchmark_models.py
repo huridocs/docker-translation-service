@@ -10,6 +10,7 @@ from os.path import join
 from tqdm import tqdm
 from huggingface_hub import hf_hub_download
 
+from configuration import ROOT_PATH
 from data_model.TranslationTask import TranslationTask
 from fast_bleu import BLEU
 from translate import get_content
@@ -95,7 +96,7 @@ def get_performance(samples: list[tuple[str, str]], path: Path):
         predictions += json.loads(Path(join(path, file)).read_text())
     average_performance = 0
     for i, (text_from, text_to) in tqdm(enumerate(samples)):
-        prediction = predictions[i]
+        prediction = predictions[i].replace("```", "")
         average_performance += get_bleu_score(text_to, prediction)
 
     print(f"Average performance: {100 * average_performance / len(samples)}")
@@ -129,5 +130,5 @@ if __name__ == "__main__":
 
     # benchmark("aya:35b", "ar-en", 100)
     # benchmark("glm4:9b", "en-fr", 100)
-    benchmark("llama3.1", "en-fr")
+    benchmark("llama3.1:70b", "en-fr", 100)
     print("time", round(time() - start, 2), "s")
