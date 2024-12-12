@@ -1,5 +1,3 @@
-import subprocess
-
 from ml_cloud_connector.MlCloudConnector import MlCloudConnector
 from ml_cloud_connector.ServerType import ServerType
 from ollama import Client

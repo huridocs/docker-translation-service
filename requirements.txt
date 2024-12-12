@@ -3,4 +3,4 @@ ollama==0.2.1
 graypy==2.1.0
 sentry_sdk==1.44.0
 git+https://github.com/huridocs/ml-cloud-connector.git@dadcefb2a3ca3446cb402ea685915e5916009fa8
-git+https://github.com/huridocs/queue-processor@bab1f4419b0768df518d06795afd5df2ba0e331c
+git+https://github.com/huridocs/queue-processor@1f0294f17074ac6d52b0e48d49a32272f121cd9c
