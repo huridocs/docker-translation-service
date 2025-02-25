@@ -79,17 +79,18 @@ Performance 2000 samples
 
 Performance 100 samples
 
-| Model        | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
-|--------------|----------|----------------|-----------------|----------------|-----------------|
-| DeepL        |          | 33.11          | -               | 36.05          | 24.64           |
-| llama3.1:70B | Prompt 3 | -              | -               | 32.65          | -               |
-| aya-35b      | Prompt 2 | 30.75          | -               | 31.48          | 20.06           |
-| glm4:9b      | Prompt 2 | 19.62          | -               | 30.21          | 16.12           |
-| glm-BF16-64  | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
-| glm-BF16-128 | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
-| llama3.1-8B  | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
-| llama3.1-8B  | Prompt 3 | -              | -               | 26.57          | -               |
-| llama3.2-3B  | Prompt 3 | -              | -               | 19.70          | -               |
+| Model           | Prompt   | Arabic-English | English-Spanish | English-French | English-Russian |
+|-----------------|----------|----------------|-----------------|----------------|-----------------|
+| DeepL           |          | 33.11          | -               | 36.05          | 24.64           |
+| llama3.1:70B    | Prompt 3 | -              | -               | 32.65          | -               |
+| aya-35b         | Prompt 2 | 30.75          | -               | 31.48          | 20.06           |
+| aya-expanse:32b | Prompt 3 | 19.26          | 19.82           | 23.92          | 15.3            |
+| glm4:9b         | Prompt 2 | 19.62          | -               | 30.21          | 16.12           |
+| glm-BF16-64     | Prompt 2 | 18.75          | -               | 28.84          | 17.20           |
+| glm-BF16-128    | Prompt 2 | 20.05          | -               | 30.09          | 17.82           |
+| llama3.1-8B     | Prompt 2 | 10.52          | 25.37           | 27.53          | 14.04           |
+| llama3.1-8B     | Prompt 3 | -              | -               | 26.57          | -               |
+| llama3.2-3B     | Prompt 3 | -              | -               | 19.70          | -               |
 
 
 
@@ -131,15 +132,16 @@ Here is the text to be translated:
 
 Speed
 
-| Model      | 1 sentence |
-|------------|------------|
-| DeepL      | 0.4s       |
-| llama3-8b  | 0.86s      |
-| aya-8b     | 0.925s     |
-| aya-35b    | 3.3s       |
-| gemma2:27b | 1.4s       |
-| mixtral    | 2.5s       |
-| glm4:9b    | 0.4s       |
+| Model           | 1 sentence |
+|-----------------|------------|
+| DeepL           | 0.4s       |
+| llama3-8b       | 0.86s      |
+| aya-8b          | 0.925s     |
+| aya-35b         | 3.3s       |
+| aya-expanse:32b | 2.14s      |
+| gemma2:27b      | 1.4s       |
+| mixtral         | 2.5s       |
+| glm4:9b         | 0.4s       |
 
 
 
