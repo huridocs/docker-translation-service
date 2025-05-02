@@ -198,10 +198,9 @@ curl http://localhost:8080/api/generate -d '{ "model": "glm-4-9b-chat", "prompt"
   * If the language is "error" then the translation server returns an error
   * The other languages are returned with the text [translation for {language}] and the input text without been translated 
 * Run it with "make docker" for having a docker container running mocking the translation service
-* The deployment script is found in the "deployment repo" branch translations-service
 * We have to set up a Google cloud server for this to run using GPUs 
   * or use a 24Gb ram server
-* For deployment, we need the following environment variables: PROJECT_ID, INSTANCE_ID, ZONE, CREDENTIALS
-* CREDENTIALS are found on the file /home/[user]/.config/gcloud/application_default_credentials.json
+* For deployment, we need the following environment variables: PROJECT_ID, INSTANCE_ID, ZONE, GOOGLE_CREDENTIALS
+* GOOGLE_CREDENTIALS is an environment variable with the JSON to connect to Google Cloud
 * The rest of variables are found on the Google Cloud Console
 
