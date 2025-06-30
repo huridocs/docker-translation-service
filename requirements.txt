@@ -1,5 +1,5 @@
 pydantic==2.8.2
-ollama==0.2.1
+ollama==0.3.3
 graypy==2.1.0
 sentry_sdk==1.44.0
 git+https://github.com/huridocs/ml-cloud-connector.git@dadcefb2a3ca3446cb402ea685915e5916009fa8
